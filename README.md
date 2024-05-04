@@ -1,3 +1,3 @@
-fffffffffffffNOBLE3 License
+NOBLE3 License
 
 Copyright (c) 2024 NOBLE3 - Minecraft
