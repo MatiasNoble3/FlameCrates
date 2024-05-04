@@ -1,0 +1,9 @@
+name: FlameCrates
+version: 1.0.0
+authors: [NOBLE3]
+main: dev.noble3.flamecrates.FlameCrates
+depend: [DecentHolograms]
+load: POSTWORLD
+commands:
+  crates:
+    aliases: ["crate"]

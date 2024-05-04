@@ -1,0 +1,84 @@
+# Display information for crate chests holograms
+hologram_lines:
+  - "&CCrate %displayname%"
+  - "&lRIGHT CLICK"
+
+# Display information for key items
+item:
+  name: "&aKey %displayname%"
+  lore:
+    - "&7Exchange %displayname%&7 key on the spawn!"
+
+inventory:
+  title: "&aCrate %displayname%"
+
+command_usage: "&c /%label% %cmd% %args% \n"
+error: "&cAn error has occurred, please contact an administrator!"
+no_console: "&cYou can't use this command from the console!"
+no_permission: "&cNot enough permissions!"
+no_block: "&cYou aren't aiming at any block!"
+no_keys: "&cYou have no keys in your hand!"
+no_keys_pending: "&cYou have no pending keys to claim!"
+no_space: "&cYou don't have space in your inventory!"
+no_crate: "&cThe crate doesn't exist!"
+no_interact: "&cYou can't use keys without a crate!"
+invalid_key: "&cYou are trying to open &b%crate_name%&c with &b%key_name%&c!"
+invalid_number: "&cYou entered an invalid number!"
+valid_key: "&aYou opened a crate of type &b%crate_name%&a!"
+received_keys: "&b%giver_name%&a gave you &b%amount% %crate_name%&a keys!"
+
+help:
+  title: "&aFlameCrates &b%version%&a by &4Noble3&r\n"
+  command: "&c /%label% %cmd% %args%&7 > &f%description%!\n"
+  subtitle: ""
+  description: "Show information about Crates"
+
+add_location:
+  success: "&aYou added a location for the crate &b%crate_name%!"
+  already_set: "&cAnother crate is already in that location."
+  description: "Adds the given Crate location"
+
+check:
+  success: "&aYou have &b%amount%&a keys to claim!"
+  description: "Checks your pending keys"
+
+claim:
+  success: "&aYou claimed a total of &b%amount%&a keys!"
+  description: "Claim your pending keys"
+
+contents:
+  success: "&aYou are editing the contents of &b%crate_name%!"
+  description: "Edits contents of crates"
+
+create:
+  success: "&aCrate &b%crate_name%&a created successfully!"
+  description: "Creates a new Crate"
+
+displayname:
+  success: "&aYou changed the displayname of &b%crate_name%&a to &b%new_name%!"
+  description: "Changes displayname of Crates"
+
+keyall:
+  success: "&aYou gave &b%amount% %crate_name%&a keys to all players!"
+  description: "Gives keys to all players"
+
+key:
+  success: "&aYou gave &b%amount% %crate_name%&a keys to &b%player_name%!"
+  description: "Gives keys to a player"
+
+list:
+  success: "&aCrates: &b%crates_list%"
+  description: "Lists available Crates"
+
+remove:
+  success: "&aYou removed the crate &b%crate_name%"
+  description: "Removes the given Crate"
+
+remove_location:
+  success: "&aYou removed a location for the crate &b%crate_name%!"
+  no_crate_at_location: "&cThere is no crate &a%crate_name% &cat that location."
+  description: "Removes the given Crate location"
+
+rows:
+  success: "&aYou setted the rows of &b%crate_name%&a to &b%rows%!"
+  description: "Change the amount of crate rows"
