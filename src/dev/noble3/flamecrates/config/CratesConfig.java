@@ -24,7 +24,7 @@ public class CratesConfig {
     }
 
     public String getString(final String key) {
-        if (stringMap.containsKey("key")) {
+        if (stringMap.containsKey(key)) {
             return stringMap.get(key);
         } else {
             final String value = configWrapper.getOrDefault(key, "undefined");
@@ -36,7 +36,7 @@ public class CratesConfig {
     }
 
     public List<String> getStringList(final String key) {
-        if (stringMap.containsKey("key")) {
+        if (listMap.containsKey(key)) {
             return listMap.get(key);
         } else {
             final List<String> value = configWrapper.getOrDefault(key, new ArrayList<>());
@@ -197,9 +197,11 @@ public class CratesConfig {
     }
 
     public String getKeySuccess(final int amount, final String crateName, final String playerName) {
-        return StringUtil.replace(getString("key.success"), new Placeholder("%amount%", amount),
-                new Placeholder("%crate_name%", crateName), new Placeholder("%player_name%", playerName));
-    }
+        return StringUtil.replace(getString("key.success"),
+                new Placeholder("%amount%", amount),
+                new Placeholder("%crate_name%", crateName),
+                new Placeholder("%player_name%", playerName));
+    }    
 
     public String getKeyDescription() {
         return ChatColor.GREEN + getString("key.description");
@@ -290,4 +292,8 @@ public class CratesConfig {
     public boolean containsKey(Location location) {
         throw new UnsupportedOperationException("Method 'containsKey' is not implemented");
     }
-}
+
+    public String getKeyallSuccess(int amount) {
+        return StringUtil.replace(getString("keyall.success"), new Placeholder("%amount%", amount));
+    }
+}    

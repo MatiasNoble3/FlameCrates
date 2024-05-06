@@ -1,5 +1,5 @@
 name: FlameCrates
-version: 1.0.1
+version: 1.0.2
 authors: [NOBLE3]
 main: dev.noble3.flamecrates.FlameCrates
 depend: [DecentHolograms]

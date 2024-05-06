@@ -25,25 +25,21 @@ class KeyAllCommand implements CratesCommand {
     }
 
     public void execute(CommandSender sender, String label, String[] args) {
-        if (args.length < 3) {
+        if (args.length < 2) {
             sender.sendMessage(cratesConfig.getCommandUsage(label, getName(), getArgs()));
             return;
         }
 
         try {
-            String crateName = args[1];
-            Crate crate = this.crateManager.getCrate(crateName);
-            if (crate == null) {
-                sender.sendMessage(cratesConfig.getNoCrate());
-            } else {
-                int amount = Integer.parseInt(args[2]);
+            int amount = Integer.parseInt(args[1]);
+            for (Crate crate : crateManager.getAllCrates()) {
                 for (Player player : this.server.getOnlinePlayers()) {
                     CratesPlayer cratesPlayer = this.cratesPlayerManager.getPlayer(player.getUniqueId());
                     cratesPlayer.giveKeys(crate, amount);
                     player.sendMessage(cratesConfig.getReceivedKeys(sender.getName(), amount, crate.getDisplayName()));
                 }
-                sender.sendMessage(cratesConfig.getKeyallSuccess(amount, crateName));
             }
+            sender.sendMessage(cratesConfig.getKeyallSuccess(amount));
         } catch (NumberFormatException exception) {
             sender.sendMessage(cratesConfig.getInvalidNumber());
         }
@@ -61,7 +57,7 @@ class KeyAllCommand implements CratesCommand {
 
     @Override
     public String getArgs() {
-        return "<crate> <amount>";
+        return "<amount>";
     }
 
     @Override
@@ -76,6 +72,6 @@ class KeyAllCommand implements CratesCommand {
 
     @Override
     public int getArgCount() {
-        return 3;
+        return 2;
     }
 }

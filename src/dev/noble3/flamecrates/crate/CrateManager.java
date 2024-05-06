@@ -174,4 +174,8 @@ public class CrateManager {
         }
         return false;
     }
-}    
+
+    public Crate[] getAllCrates() {
+        return crates.values().toArray(new Crate[0]);
+    }
+}

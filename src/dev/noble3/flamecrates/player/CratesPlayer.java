@@ -105,4 +105,4 @@ public class CratesPlayer {
     } 
     return total;
   }
-}      
+}  

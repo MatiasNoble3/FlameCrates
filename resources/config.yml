@@ -1,7 +1,8 @@
 # Display information for crate chests holograms
 hologram_lines:
-  - "&CCrate %displayname%"
-  - "&lRIGHT CLICK"
+  - "&f&lCrate &b%displayname%"
+  - "&a&lRIGHT CLICK"
+  - "&6"
 
 # Display information for key items
 item:
@@ -59,7 +60,7 @@ displayname:
   description: "Changes displayname of Crates"
 
 keyall:
-  success: "&aYou gave &b%amount% %crate_name%&a keys to all players!"
+  success: "&aYou gave &b%amount% keys to all players!"
   description: "Gives keys to all players"
 
 key:

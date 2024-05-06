@@ -76,12 +76,14 @@ public class Crate {
     ItemStack keyItemStack = new ItemStack(Material.TRIPWIRE_HOOK);
     ItemMeta keyItemMeta = keyItemStack.getItemMeta();
 
-    if (keyItemMeta != null) {
-        keyItemMeta.setDisplayName(getItemName());
-        keyItemMeta.setLore(getItemLore());
-        keyItemMeta.addEnchant(Enchantment.DURABILITY, 0, false);
-        keyItemStack.setItemMeta(keyItemMeta);
+    if (keyItemMeta == null) {
+        return null; // Evitar NullPointerException
     }
+
+    keyItemMeta.setDisplayName(getItemName());
+    keyItemMeta.setLore(getItemLore());
+    keyItemMeta.addEnchant(Enchantment.DURABILITY, 0, false);
+    keyItemStack.setItemMeta(keyItemMeta);
 
     return keyItemStack;
 }
@@ -102,43 +104,52 @@ public class Crate {
   }
 
   public boolean openKey(final Player player, final ItemStack itemStack) {
-    if (player != null && isKey(itemStack)) {
-        final PlayerInventory playerInventory = player.getInventory();
-        final Inventory inventory = this.inventory;
-
-        if (playerInventory.firstEmpty() != -1) {
-            final ItemStack[] rewards = trimContents(inventory.getContents()).toArray(new ItemStack[0]);
-
-            if (rewards.length > 0) {
-                final int randomContent = (int) (Math.random() * rewards.length);
-                final ItemStack reward = rewards[randomContent];
-                final int amount = itemStack.getAmount() - 1;
-
-                if (reward != null) {
-                    playerInventory.addItem(reward.clone());
-
-                    if (amount > 0) {
-                        itemStack.setAmount(amount);
-                    } else {
-                        playerInventory.remove(itemStack);
-                    }
-
-                    return true;
-                }
-            }
-        }
+    if (player == null || !isKey(itemStack)) {
+        return false;
     }
 
-    return false;
+    final PlayerInventory playerInventory = player.getInventory();
+    final Inventory inventory = this.inventory;
+
+    if (playerInventory.firstEmpty() == -1) {
+        return false;
+    }
+
+    final ItemStack[] rewards = trimContents(inventory.getContents()).toArray(new ItemStack[0]);
+
+    if (rewards.length == 0) {
+        return false;
+    }
+
+    final int randomContent = (int) (Math.random() * rewards.length);
+    final ItemStack reward = rewards[randomContent];
+
+    if (reward == null) {
+        return false;
+    }
+
+    final int amount = itemStack.getAmount() - 1;
+
+    playerInventory.addItem(reward.clone());
+
+    if (amount > 0) {
+        itemStack.setAmount(amount);
+    } else {
+        playerInventory.remove(itemStack);
+    }
+
+    return true;
 }
 
-  public ItemStack getKey(final PlayerInventory playerInventory) {
-    for (final ItemStack itemStack : playerInventory.getContents()) {
-      if (isKey(itemStack))
-        return itemStack;
-    }
-    return null;
+
+public ItemStack getKey(final PlayerInventory playerInventory) {
+  for (final ItemStack itemStack : playerInventory.getContents()) {
+      if (isKey(itemStack)) {
+          return itemStack;
+      }
   }
+  return null;
+}
 
   public void openInventory(final Player player) {
     player.openInventory(this.inventory);
@@ -146,24 +157,26 @@ public class Crate {
 
   boolean isKey(final ItemStack itemStack) {
     if (itemStack != null && itemStack.hasItemMeta()) {
-      final List<String> itemLore = itemStack.getItemMeta().getLore();
-      if (itemLore != null) {
-        final int loreSize = itemLore.size() - 1;
-        if (loreSize > 0)
-          return itemLore.get(loreSize).contains("ID: " + this.name);
-      }
+        final List<String> itemLore = itemStack.getItemMeta().getLore();
+        if (itemLore != null) {
+            final int loreSize = itemLore.size() - 1;
+            if (loreSize > 0) {
+                return itemLore.get(loreSize).contains("ID: " + this.name);
+            }
+        }
     }
     return false;
-  }
+}
 
   private Collection<ItemStack> trimContents(final ItemStack[] itemStacks) {
     final Collection<ItemStack> trimmedItemStacks = new HashSet<>();
     for (final ItemStack itemStack : itemStacks) {
-      if (itemStack != null)
-        trimmedItemStacks.add(itemStack);
+        if (itemStack != null) {
+            trimmedItemStacks.add(itemStack);
+        }
     }
     return trimmedItemStacks;
-  }
+}
 
   public void despawnHolograms() {
     for (final CrateBlock crateBlock : crateBlocks.values()) {
@@ -180,14 +193,14 @@ public class Crate {
   }
 
   public void addLocation(final Location location) {
-    if (location != null) {
-      final CrateBlock crateBlock = new CrateBlock(plugin, this, location);
-
-      this.crateBlocks.put(location, crateBlock);
-
-      crateBlock.spawnHologram();
+    if (location == null) {
+        return;
     }
-  }
+
+    final CrateBlock crateBlock = new CrateBlock(plugin, this, location);
+    crateBlocks.put(location, crateBlock);
+    crateBlock.spawnHologram();
+}
 
   public void removeLocation(final Location location) {
     final Iterator<Entry<Location, CrateBlock>> locationIterator = this.crateBlocks.entrySet().iterator();
@@ -208,16 +221,16 @@ public class Crate {
   }
 
   public void setRows(final int rows) {
-    final Inventory inventory = Bukkit.createInventory(null, rows * 9, cratesConfig.getInventoryTitle(displayName));
+    final Inventory newInventory = Bukkit.createInventory(null, rows * 9, cratesConfig.getInventoryTitle(displayName));
 
     if (this.inventory != null) {
-      InventoryUtil.copy(this.inventory, inventory);
-      InventoryUtil.close(this.inventory);
-      InventoryUtil.clear(this.inventory);
+        InventoryUtil.copy(this.inventory, newInventory);
+        InventoryUtil.close(this.inventory);
+        InventoryUtil.clear(this.inventory);
     }
 
-    this.inventory = inventory;
-  }
+    this.inventory = newInventory;
+}
 
   public void addItem(final ItemStack item) {
     this.inventory.addItem(item);
